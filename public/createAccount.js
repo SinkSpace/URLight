@@ -1,10 +1,3 @@
-const express = require('express');
-const path = require('path');
-const https = require('https');
-const fs = require('fs');
-const app = express();
-app.use(express.json());
-
 console.log('Библиотеки скрипта создания аккаунта загружены');
 
 const registerServer = document.getElementById('registerServer');
