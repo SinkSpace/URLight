@@ -15,7 +15,7 @@ registerServer.addEventListener('click', async () => {
         }
 
         if (password == passwordRepeat) {
-            const response = await fetch('/api/create', {
+            const response = await fetch('/api/check', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -23,9 +23,26 @@ registerServer.addEventListener('click', async () => {
                 body: JSON.stringify({
                     login: login,
                     email: email,
-                    password: password,
                 })
-            })
+            });
+
+            const data = response.json();
+
+            if (data.success) {
+                const responses = await fetch('/api/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        login: login,
+                        email: email,
+                        password: password,
+                    })
+                })
+            } else {
+                alert(data.message);
+            }
 
             if (!response.ok) throw new Error(`${response.status}`);
         } else {

@@ -27,6 +27,28 @@ app.get('/register', (req, res) => {
 
 // пост-запрос
 
+app.post('/api/check', (req, res) => {
+    const { email, login } = req.body;
+    try {
+        const check = pool.query("SELECT COUNT(*) FROM users WHERE email = ? OR login = ?", [email, login]);
+
+        if (check) {
+            res.json({
+                success: false,
+                message: 'Пользователь существует',
+            });
+        } else {
+            res.json({
+                success: true,
+                message: 'Пользователя можно регистрировать',
+            });
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 app.post('/api/create', (req, res) => {
     const { email, login, password } = req.body;
     try {
