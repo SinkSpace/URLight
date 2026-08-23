@@ -30,7 +30,7 @@ app.get('/register', (req, res) => {
 app.post('/api/create', (req, res) => {
     const { email, login, password } = req.body;
     try {
-        pool.query(`INSERT INTO users (email, login, password) VALUES (${email}, ${login}, ${password})`);
+        pool.query(`INSERT INTO users (email, login, password) VALUES ('${email}', '${login}', '${password}')`);
     } catch (error) {
         console.log(error);
     }
