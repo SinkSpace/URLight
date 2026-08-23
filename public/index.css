@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+#headB {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#headB button {
+    border: 0px solid black;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    font-size: 16px;
+    border-radius: 5px;
+    color: white;
+}
+
+#joinB {
+    background-color: green;
+}
+
+#registerB {
+    background-color: blue;
+}

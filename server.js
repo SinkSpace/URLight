@@ -5,20 +5,36 @@ const https = require('https');
 const fs = require('fs');
 const app = express();
 
-console.log('Библиотеки загружены');
+const pool = require('./db.js');
 
 // инициализация сервера
 app.use(express.json());
 app.use(express.static('public'));
 
-console.log('Сервер инициализирован');
-
 // отправка веб-страниц
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-    console.log('Главная страница отправлена');
 });
+
+app.get('/join', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'join.html'));
+});
+
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
+
+// пост-запрос
+
+app.post('/api/create', (req, res) => {
+    const { email, login, password } = req.body;
+    try {
+        pool.query(`INSERT INTO users (email, login, password) VALUES (${email}, ${login}, ${password})`);
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 // запуск сервера
 
