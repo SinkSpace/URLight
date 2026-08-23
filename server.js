@@ -23,8 +23,8 @@ app.get('/', (req, res) => {
 // запуск сервера
 
 https.createServer({
-    key: fs.readFileSync('/etc/letsencrypt/live/crmsink.ru-0001/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/crmsink.ru-0001/fullchain.pem')
+    key: fs.readFileSync('/etc/letsencrypt/live/crmsink.ru/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/crmsink.ru/fullchain.pem')
 }).listen(443, () => {
     console.log('Сертификаты установлены, сервер запущен');
 });
