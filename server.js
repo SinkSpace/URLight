@@ -27,10 +27,10 @@ app.get('/register', (req, res) => {
 
 // пост-запрос
 
-app.post('/api/check', (req, res) => {
+app.post('/api/check', async (req, res) => {
     const { email, login } = req.body;
     try {
-        const check = pool.query("SELECT COUNT(*) FROM users WHERE email = ? OR login = ?", [email, login]);
+        const check = await pool.query("SELECT COUNT(*) FROM users WHERE email = $1 OR login = $2", [email, login]);
 
         if (check) {
             res.json({
@@ -49,19 +49,19 @@ app.post('/api/check', (req, res) => {
     }
 })
 
-app.post('/api/create', (req, res) => {
+app.post('/api/create', async (req, res) => {
     const { email, login, password } = req.body;
     try {
-        pool.query(`INSERT INTO users (email, login, password) VALUES ('${email}', '${login}', '${password}')`);
+        await pool.query('INSERT INTO users (email, login, password) VALUES ($1, $2, $3)', [email, login, password]);
     } catch (error) {
         console.log(error);
     }
 })
 
-app.post('/api/join', (req, res) => {
+app.post('/api/join', async (req, res) => {
     const { login, password } = req.body;
     try {
-        const check = pool.query('SELECT password FROM users WHERE login = $1', [login]);
+        const check = await pool.query('SELECT password FROM users WHERE login = $1', [login]);
         const passwordBase = check?.rows?.[0]?.password || null;
         if (password == passwordBase) {
             res.json({
