@@ -58,6 +58,27 @@ app.post('/api/create', (req, res) => {
     }
 })
 
+app.post('/api/join', (req, res) => {
+    const { login, password } = req.body;
+    try {
+        const check = pool.query('SELECT password FROM users WHERE login = $1', [login]);
+        const passwordBase = check.rows[0]?.password || null;
+        if (password == passwordBase) {
+            res.json({
+                success: true,
+                message: 'Авторизация успешна',
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'Неверное имя пользователя или пароль',
+            });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 // запуск сервера
 
 https.createServer({
