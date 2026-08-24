@@ -62,7 +62,7 @@ app.post('/api/join', (req, res) => {
     const { login, password } = req.body;
     try {
         const check = pool.query('SELECT password FROM users WHERE login = $1', [login]);
-        const passwordBase = check.rows[0]?.password || null;
+        const passwordBase = check?.rows?.[0]?.password || null;
         if (password == passwordBase) {
             res.json({
                 success: true,
